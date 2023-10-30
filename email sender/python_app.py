@@ -2,5 +2,29 @@
 # generate app password
 #create a function to send email
 
-fdxo nmqv nrhw kwgd
+
 from email.message import EmailMessage
+import ssl
+import smtplib
+
+email_sender = 'agalacaren@gmail.com'
+email_password = ''
+
+email_receiver = ''
+subject = "Test email"
+body = """
+Hello, this is a test email from python. Do not reply.
+"""
+
+em = EmailMessage()
+em ['From'] = email_sender
+em ['To'] = email_receiver
+em ['Subject'] = subject
+em.set_content(body)
+
+context = ssl.create_default_context()
+
+with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+    smtp.login(email_sender, email_password)
+    smtp.sendmail(email_sender, email_receiver, em.as_string())
+
